@@ -6,4 +6,3 @@ greet() -> "Welcome to TicTacToe".
 ask_for_move() -> "Where would you like to place your marker?".
 
 ask_for_marker() -> "What would you like to use as your marker?".
-

@@ -9,6 +9,7 @@ display_board([RowToPrint | RemainingRows]) ->
 	io:format("~w~n",[RowToPrint]),
 	display_board(RemainingRows).
 
+
 greet_user() -> display(instructions:greet()).
 
 get_move() -> prompt(instructions:ask_for_move()).
@@ -17,5 +18,4 @@ get_marker() -> prompt(instructions:ask_for_marker()).
 
 prompt(MessageToClient) -> 
   io:fread(MessageToClient++"\n","~s").
-
 
