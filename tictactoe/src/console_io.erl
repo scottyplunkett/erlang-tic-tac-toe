@@ -1,10 +1,5 @@
 -module(console_io).
--export([	display/1,
-          display_board/1,
-          greet_user/0,
-          get_move/0,
-          get_marker/0,
-          prompt/1]).
+-export([display/1,display_board/1,greet_user/0,get_move/0,get_marker/0,prompt/1]).
 
 display(Message) ->
   io:fwrite(Message). 
@@ -22,4 +17,5 @@ get_marker() -> prompt(instructions:ask_for_marker()).
 
 prompt(MessageToClient) -> 
   io:fread(MessageToClient++"\n","~s").
+
 
