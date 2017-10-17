@@ -25,10 +25,3 @@ split_board_into_rows([FirstCell|RestOfCells],[RowBeingFilled | FilledRowSublist
 split_board_into_rows([FirstCell|RestOfCells],[],PositionInRow,FilledRowSize) ->
     split_board_into_rows(RestOfCells,[[FirstCell]],PositionInRow+1,FilledRowSize).
 
-
-
-
-
-
-	
-

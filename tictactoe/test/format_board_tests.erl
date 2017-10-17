@@ -15,3 +15,5 @@ split_board_into_rows_test() ->
 	[{ "make board into a list of row sublists",
 		?assertEqual([[1,2,3],[4,5,6],[7,8,9]],format_board:split_board_into_rows([1,2,3,4,5,6,7,8,9]))}].
 
+
+
