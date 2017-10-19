@@ -15,3 +15,4 @@ get_move() -> prompt(instructions:ask_for_move()).
 
 prompt(MessageToClient) -> 
 	io:fread(MessageToClient++"\n","~s").
+

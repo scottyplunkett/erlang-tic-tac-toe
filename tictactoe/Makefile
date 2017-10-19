@@ -1,4 +1,4 @@
-all:
+all:		
 			compile run_test clean
 
 compile:

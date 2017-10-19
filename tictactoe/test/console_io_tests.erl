@@ -8,8 +8,8 @@ display_test() ->
 
 prompt_test() -> 
 	[{ 	"displays a prompt and awaits input",
-			?assertEqual(	console_io:prompt("Some prompt"),
-										io:fread("Some Prompt\n","~s"))}].
+			?assertEqual(console_io:prompt("Some prompt"),
+									 io:fread("Some Prompt\n","~s"))}].
 
 display_board_test() -> 
   [{  "displays a board with a row printed on each line",

@@ -8,4 +8,3 @@ greet_test() ->
 ask_for_move_test() ->
   [{ "passes a message asking for a move",
      ?assertEqual("Where would you like to place your marker?",instructions:ask_for_move())}].
-
