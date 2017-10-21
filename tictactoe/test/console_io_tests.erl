@@ -24,4 +24,3 @@ get_move_test() ->
   [{  "ask a user where they would like to move and passes their input",
       ?assertEqual(console_io:get_move(),
                    io:fread(instructions:ask_for_move(),"~s"))}].
-
