@@ -3,7 +3,7 @@
 
 greet_test() -> 
 	[{ "passes a greeting message to a client",
-		 ?assertEqual("Welcome to TicTacToe", instructions:greet())}].
+		 ?assertEqual("Welcome to TicTacToe\n", instructions:greet())}].
 
 ask_for_move_test() ->
   [{ "passes a message asking for a move",

@@ -14,3 +14,7 @@ get_board_row_length_test() ->
 split_board_into_rows_test() ->
 	[{ "make board into a list of row sublists",
 		?assertEqual([[1,2,3],[4,5,6],[7,8,9]],format_board:split_board_into_rows([1,2,3,4,5,6,7,8,9]))}].
+
+make_new_board_test() -> 
+  [{ "makes a new board with 9 spaces",
+    ?assertEqual([1,2,3,4,5,6,7,8,9],format_board:make_new_board())}].
