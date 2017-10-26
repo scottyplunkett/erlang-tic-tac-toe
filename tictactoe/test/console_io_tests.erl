@@ -3,8 +3,10 @@
 
 display_test() -> 
 	[{	"displays some message in the console",	
-			?assertEqual(console_io:display("Some Message"),io:fwrite("Some Message")),
-			?assertEqual(console_io:display(instructions:greet()),io:fwrite("Welcome to TicTacToe\n"))}].
+			?assertEqual(console_io:display("Some Message"),
+                   io:fwrite("Some Message")),
+			?assertEqual(console_io:display(instructions:greet()),
+                   io:fwrite("Welcome to TicTacToe\n"))}].
 
 prompt_test() -> 
 	[{ 	"displays a prompt and awaits input",

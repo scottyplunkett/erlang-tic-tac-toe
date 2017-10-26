@@ -6,13 +6,13 @@ display(Message) ->
 
 display_board([]) -> board;
 display_board([RowToPrint | RemainingRows]) ->
-	io:format("~w~n",[RowToPrint]),
-	display_board(RemainingRows).
-
+  io:format("~w~n",[RowToPrint]),
+  display_board(RemainingRows).
+  
 greet_user() -> display(instructions:greet()).
-
-get_move() -> prompt(instructions:ask_for_move()).
 
 prompt(MessageToClient) -> 
 	io:fread(MessageToClient++"\n","~s").
 
+get_move() -> prompt(instructions:ask_for_move()).
+  
