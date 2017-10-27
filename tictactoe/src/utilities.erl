@@ -5,7 +5,8 @@
          validate_move_position/2,
          restart_turn/2,
          board_full/1,
-         game_won/1]).
+         game_won/1,
+         complete_turn/2]).
 
 move(Location, Board, Piece) ->
   Position = validate_move_position(console_io:validate_move_format(Location), Board),
@@ -63,4 +64,15 @@ game_won([x,_,_,_,x,_,_,_,x]) -> true;
 game_won([o,_,_,_,o,_,_,_,o]) -> true;
 game_won(_) -> false.
 
-
+complete_turn(Board, Piece) ->
+  case utilities:game_won(Board) of
+      true ->
+        "Game Over";
+      false ->
+        case utilities:board_full(Board) of
+          cats_game ->
+            "Draw!";
+          false ->
+            game_loop:take_turn(Board, utilities:change_player(Piece))
+        end
+    end.
