@@ -1,6 +1,7 @@
 -module(game_loop).
 -export([ begin_play/0,take_turn/2, setup/0]).
 
+
 begin_play() ->
   Board = format_board:make_new_board(),
   setup(),

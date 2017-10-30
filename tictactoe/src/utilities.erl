@@ -67,11 +67,11 @@ game_won(_) -> false.
 complete_turn(Board, Piece) ->
   case utilities:game_won(Board) of
       true ->
-        "Game Over";
+        console_io:display("Game Over\n"); 
       false ->
         case utilities:board_full(Board) of
           cats_game ->
-            "Draw!";
+            console_io:display("Draw!\n");
           false ->
             game_loop:take_turn(Board, utilities:change_player(Piece))
         end
