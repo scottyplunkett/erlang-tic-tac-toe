@@ -1,7 +1,7 @@
 -module(format_board).
 -export([ get_board_length/1,
-	  get_board_row_length/1,
-	  split_board_into_rows/1,split_board_into_rows/2]).
+          get_board_row_length/1,
+          split_board_into_rows/1,split_board_into_rows/2]).
 
 get_board_length(Board) -> length(Board).
 
@@ -24,6 +24,7 @@ split_board_into_rows([FirstCell|RestOfCells],[RowBeingFilled | FilledRowSublist
     split_board_into_rows(RestOfCells,[[FirstCell | RowBeingFilled] | FilledRowSublists],PositionInRow+1,FilledRowSize);
 split_board_into_rows([FirstCell|RestOfCells],[],PositionInRow,FilledRowSize) ->
     split_board_into_rows(RestOfCells,[[FirstCell]],PositionInRow+1,FilledRowSize).
+
 
 
 
