@@ -6,7 +6,10 @@
          restart_turn/2,
          board_full/1,
          game_won/1,
-         complete_turn/2]).
+         complete_turn/2,
+         x_wins/0,
+         o_wins/0]).
+
 
 move(Location, Board, Piece) ->
   Position = validate_move_position(console_io:validate_move_format(Location), Board),
@@ -46,28 +49,31 @@ board_full([_ | RestOfCells]) ->
 board_full([]) ->
   cats_game.
 
-game_won([o,o,o,_,_,_,_,_,_]) -> true;
-game_won([x,x,x,_,_,_,_,_,_]) -> true;
-game_won([_,_,_,o,o,o,_,_,_]) -> true;
-game_won([_,_,_,x,x,x,_,_,_]) -> true;
-game_won([_,_,_,_,_,_,o,o,o]) -> true;
-game_won([_,_,_,_,_,_,x,x,x]) -> true;
-game_won([o,_,_,o,_,_,o,_,_]) -> true;
-game_won([x,_,_,x,_,_,x,_,_]) -> true;
-game_won([_,o,_,_,o,_,_,o,_]) -> true;
-game_won([_,x,_,_,x,_,_,x,_]) -> true;
-game_won([_,_,o,_,_,o,_,_,o]) -> true;
-game_won([_,_,x,_,_,x,_,_,x]) -> true;
-game_won([_,_,x,_,x,_,x,_,_]) -> true;
-game_won([_,_,o,_,o,_,o,_,_]) -> true;
-game_won([x,_,_,_,x,_,_,_,x]) -> true;
-game_won([o,_,_,_,o,_,_,_,o]) -> true;
+x_wins() -> "Player 1, the 'x' player has won the game.\n".
+o_wins() -> "Player 2, the 'o' player has won the game.\n".
+
+game_won([o,o,o,_,_,_,_,_,_]) -> {true, o_wins()};
+game_won([_,_,_,o,o,o,_,_,_]) -> {true, o_wins()};
+game_won([_,_,_,_,_,_,o,o,o]) -> {true, o_wins()};
+game_won([o,_,_,o,_,_,o,_,_]) -> {true, o_wins()};
+game_won([_,o,_,_,o,_,_,o,_]) -> {true, o_wins()};
+game_won([_,_,o,_,_,o,_,_,o]) -> {true, o_wins()};
+game_won([o,_,_,_,o,_,_,_,o]) -> {true, o_wins()};
+game_won([_,_,o,_,o,_,o,_,_]) -> {true, o_wins()};
+game_won([x,x,x,_,_,_,_,_,_]) -> {true, x_wins()};
+game_won([_,_,_,x,x,x,_,_,_]) -> {true, x_wins()};
+game_won([_,_,_,_,_,_,x,x,x]) -> {true, x_wins()};
+game_won([x,_,_,x,_,_,x,_,_]) -> {true, x_wins()};
+game_won([_,x,_,_,x,_,_,x,_]) -> {true, x_wins()};
+game_won([_,_,x,_,_,x,_,_,x]) -> {true, x_wins()};
+game_won([_,_,x,_,x,_,x,_,_]) -> {true, x_wins()};
+game_won([x,_,_,_,x,_,_,_,x]) -> {true, x_wins()};
 game_won(_) -> false.
 
 complete_turn(Board, Piece) ->
   case utilities:game_won(Board) of
-      true ->
-        console_io:display("Game Over\n"); 
+      {true, Winner} ->
+        console_io:display(Winner); 
       false ->
         case utilities:board_full(Board) of
           cats_game ->
