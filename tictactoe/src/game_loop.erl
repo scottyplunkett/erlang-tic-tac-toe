@@ -1,7 +1,7 @@
 -module(game_loop).
 -export([begin_play/0,take_turn/1,take_turn/2, complete_turn/1, complete_turn/2, setup/0,restart_turn/2]).
 
-begin_play()                     -> Board = format_board:make_new_board(), 
+begin_play()                     -> Board = format_board:make_new_board(),
                                     setup(),
                                     console_io:display_board(format_board:split_board_into_rows(Board)),
                                     take_turn(Board, x).
