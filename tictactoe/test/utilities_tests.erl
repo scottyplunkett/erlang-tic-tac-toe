@@ -1,6 +1,15 @@
 -module(utilities_tests).
 -include_lib("eunit/include/eunit.hrl").
 
+move_test() ->
+  InvalidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [x,2,3,4,5,6,7,8,9]),
+  ValidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [1,2,3,4,5,6,7,8,9]),
+  [{  "checks validity and marks board when move is valid, otherwise returns invalid info tuple",
+      ?assertEqual({invalid,[1,2,3,4,5,6,7,8,x],o}, 
+                   utilities:move(InvalidMove,[1,2,3,4,5,6,7,8,x],o)),
+      ?assertEqual([x,2,3,4,5,6,7,8,9], 
+                   utilities:move(ValidMove,[1,2,3,4,5,6,7,8,9],x))}].
+
 mark_board_test() ->
   [{  "returns board with marker placed",
       ?assertEqual(
@@ -15,7 +24,22 @@ change_player_test() ->
       ?assertEqual(o,utilities:change_player(x)),
       ?assertEqual(x,utilities:change_player(o))}].
 
-validate_move_test() ->
+whos_in_play_test() -> 
+  [{  "using only the board; determines which player is currently at play (their turn)",
+    ?assertEqual(x,utilities:whos_in_play([1,2,3,4,5,6,7,8,9])),
+    ?assertEqual(o,utilities:whos_in_play([x,2,3,4,5,6,7,8,9]))}].
+
+cell_owned_by_x_test() ->
+  [{  "returns boolean based on wheather cell passed as argument holds x or not",
+      ?assertEqual(true,utilities:cell_owned_by_x(x),
+      ?assertNotEqual(true,utilities:cell_owned_by_x(o)))}].
+
+cell_vacant_test() ->
+  [{  "returns boolean based on wheather cell passed as argument is empty",
+      ?assertEqual(true,utilities:cell_vacant(1),
+      ?assertNotEqual(true,utilities:cell_vacant(o)))}].
+
+validate_move_position_test() ->
   [{  "validates a move",
       ?assertEqual( invalid,
         utilities:validate_move_position(1,[o,2,3,4,5,6,7,8,9])),
@@ -38,6 +62,14 @@ board_full_test() ->
         utilities:board_full([x,o,x,o,5,x,o,x,o])),
       ?assertEqual( cats_game,
         utilities:board_full([x,o,x,o,x,x,o,x,o]))}].
+
+x_wins_test() ->
+  [{  "returns win message for x",
+    ?assertEqual("Player 1, the 'x' player has won the game.\n", utilities:x_wins())}].
+
+o_wins_test() ->
+  [{  "returns win message for o",
+    ?assertEqual("Player 2, the 'o' player has won the game.\n", utilities:o_wins())}].
 
 game_won_test() -> 
   [{  "checks if the game is won",
@@ -106,10 +138,3 @@ game_won_test() ->
                             4,o,6,
                             7,8,o]))
       }].
-
-whos_in_play_test() -> 
-  [{  "using only the board; determines which player is currently at play (their turn)",
-    ?assertEqual(x,utilities:whos_in_play([1,2,3,4,5,6,7,8,9])),
-    ?assertEqual(o,utilities:whos_in_play([x,2,3,4,5,6,7,8,9]))}].
-
-

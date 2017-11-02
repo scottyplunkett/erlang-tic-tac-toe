@@ -1,5 +1,5 @@
 -module(utilities).
--export([move/3,mark_board/3,change_player/1,validate_move_position/2,board_full/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,is_player_x_cell/1,is_empty_cell/1]).
+-export([move/3,mark_board/3,change_player/1,validate_move_position/2,board_full/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,cell_owned_by_x/1,cell_vacant/1]).
 
 
 move(invalid,Board,Piece)           
@@ -14,25 +14,25 @@ mark_board(Move, Board, Piece)
   -> BoardBeforeMove = lists:sublist(Board, Move - 1),
      BoardAfterMove  = lists:nthtail(Move, Board),
      BoardBeforeMove ++ [Piece] ++ BoardAfterMove.
-  
+
 change_player(x) -> o;
 change_player(o) -> x.
 
 whos_in_play(Board) 
-  -> Xs      = length(lists:filter(fun is_player_x_cell/1, Board)),
-     Empties = length(lists:filter(fun is_empty_cell/1, Board)),
+  -> Xs      = length(lists:filter(fun cell_owned_by_x/1, Board)),
+     Empties = length(lists:filter(fun cell_vacant/1, Board)),
      Os      = 9 - Xs - Empties,
      case Xs - Os =< 0 of 
        true -> x;
        false -> o
      end.
 
-is_player_x_cell(x) -> true;
-is_player_x_cell(_) -> false.
+cell_owned_by_x(x) -> true;
+cell_owned_by_x(_) -> false.
 
-is_empty_cell(Cell) when is_integer(Cell) 
+cell_vacant(Cell) when is_integer(Cell) 
   -> true;
-is_empty_cell(_)        
+cell_vacant(_)        
   -> false.
 
 validate_move_position(Position, Board) 
@@ -48,8 +48,8 @@ board_full([ThisCell | _])
 board_full([_ | RestOfCells]) -> board_full(RestOfCells);
 board_full([])                -> cats_game.
 
-x_wins() -> "Player 1, the 'x' player has won the game.".
-o_wins() -> "Player 2, the 'o' player has won the game.".
+x_wins() -> "Player 1, the 'x' player has won the game.\n".
+o_wins() -> "Player 2, the 'o' player has won the game.\n".
 
 game_won([o,o,o,_,_,_,_,_,_]) -> {true, o_wins()};
 game_won([_,_,_,o,o,o,_,_,_]) -> {true, o_wins()};
