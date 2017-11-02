@@ -21,20 +21,20 @@ validate_move_test() ->
         utilities:validate_move_position(1,[o,2,3,4,5,6,7,8,9])),
       ?assertEqual( invalid,
         utilities:validate_move_position(10,[1,2,3,4,5,6,7,8,9])),
-      ?assertEqual( 1,
+      ?assertEqual( {valid, 1},
         utilities:validate_move_position(1,[1,2,3,4,5,6,7,8,9])),
       ?assertEqual( invalid,
         utilities:validate_move_position(0,[1,2,3,4,5,6,7,8,9]))}].
 
 board_full_test() -> 
   [{  "checks if the game is over",
-      ?assertEqual( false,
+      ?assertEqual( not_yet,
         utilities:board_full([1,2,3,4,5,6,7,8,9])),
-      ?assertEqual( false,
+      ?assertEqual( not_yet,
         utilities:board_full([x,2,3,4,5,6,7,8,9])),
-      ?assertEqual( false,
+      ?assertEqual( not_yet,
         utilities:board_full([x,o,3,4,5,6,7,8,9])),
-      ?assertEqual( false,
+      ?assertEqual( not_yet,
         utilities:board_full([x,o,x,o,5,x,o,x,o])),
       ?assertEqual( cats_game,
         utilities:board_full([x,o,x,o,x,x,o,x,o]))}].
@@ -107,13 +107,9 @@ game_won_test() ->
                             7,8,o]))
       }].
 
-complete_turn_test() -> 
-  [{  "completes a turn by either starting a new turn or ending the game when won or board full",
-      ?assertEqual(console_io:display(utilities:o_wins()),
-                   utilities:complete_turn([o,2,3,o,5,6,o,8,9], o)),
-      ?assertEqual(console_io:display(utilities:x_wins()),
-                   utilities:complete_turn([x,2,3,4,x,6,7,8,x], x)),
-      ?assertEqual(console_io:display("Draw!\n"),
-                   utilities:complete_turn([x,o,x,o,x,x,o,x,o], o))}].
-      % ?assertEqual(game_loop:take_turn([x,o,x,4,x,x,7,x,9], x),
-      %              utilities:complete_turn([x,o,x,4,x,x,7,x,9], o))}].
+whos_in_play_test() -> 
+  [{  "using only the board; determines which player is currently at play (their turn)",
+    ?assertEqual(x,utilities:whos_in_play([1,2,3,4,5,6,7,8,9])),
+    ?assertEqual(o,utilities:whos_in_play([x,2,3,4,5,6,7,8,9]))}].
+
+
