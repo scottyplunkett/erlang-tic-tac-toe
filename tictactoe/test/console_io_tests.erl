@@ -1,12 +1,13 @@
 -module(console_io_tests).
 -include_lib("eunit/include/eunit.hrl").
+-define(INIT_BOARD, [1,2,3,4,5,6,7,8,9]).
 
 display_test()              -> [{"displays some message in the console",
                                  ?assertEqual(console_io:display("Some Message"),io:fwrite("Some Message")),
                                  ?assertEqual(console_io:display(instructions:greet()),io:fwrite("Welcome to TicTacToe\n"))}].
 
 display_board_test()        -> [{"displays a board with a row printed on each line",
-                                 ?assertEqual(console_io:display_board([1]),board)}].
+                                 ?assertEqual(console_io:display_board([1,2,3,4,5,6,7,8,9]),console_io:display_board(?INIT_BOARD))}].
 
 greet_user_test()           -> [{"greets a user in console",
                                  ?assertEqual(console_io:greet_user(),io:fwrite(instructions:greet()))}].

@@ -1,5 +1,5 @@
 -module(utilities).
--export([move/3,mark_board/3,change_player/1,validate_move_position/2,board_full/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,cell_owned_by_x/1,cell_vacant/1]).
+-export([move/3,mark_board/3,change_player/1,validate_move_position/2,check_for_draw/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,cell_owned_by_x/1,cell_vacant/1]).
 
 
 move(invalid,Board,Piece)           
@@ -43,10 +43,10 @@ validate_move_position(Position, Board)
        false -> invalid
      end.
 
-board_full([ThisCell | _]) 
-  when is_integer(ThisCell)   -> not_yet;
-board_full([_ | RestOfCells]) -> board_full(RestOfCells);
-board_full([])                -> cats_game.
+check_for_draw([ThisCell | _]) 
+  when is_integer(ThisCell)       -> not_yet;
+check_for_draw([_ | RestOfCells]) -> check_for_draw(RestOfCells);
+check_for_draw([])                -> cats_game.
 
 x_wins() -> "Player 1, the 'x' player has won the game.\n".
 o_wins() -> "Player 2, the 'o' player has won the game.\n".

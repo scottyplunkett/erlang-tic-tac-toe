@@ -27,7 +27,9 @@ change_player_test() ->
 whos_in_play_test() -> 
   [{  "using only the board; determines which player is currently at play (their turn)",
     ?assertEqual(x,utilities:whos_in_play([1,2,3,4,5,6,7,8,9])),
-    ?assertEqual(o,utilities:whos_in_play([x,2,3,4,5,6,7,8,9]))}].
+    ?assertEqual(o,utilities:whos_in_play([x,2,3,4,5,6,7,8,9])),
+    ?assertEqual(x,utilities:whos_in_play([x,o,x,o,5,6,7,8,9])),
+    ?assertEqual(o,utilities:whos_in_play([x,o,x,o,x,o,x,8,9]))}].
 
 cell_owned_by_x_test() ->
   [{  "returns boolean based on wheather cell passed as argument holds x or not",
@@ -50,18 +52,18 @@ validate_move_position_test() ->
       ?assertEqual( invalid,
         utilities:validate_move_position(0,[1,2,3,4,5,6,7,8,9]))}].
 
-board_full_test() -> 
-  [{  "checks if the game is over",
+check_for_draw_test() -> 
+  [{  "checks if the game has ended in a draw",
       ?assertEqual( not_yet,
-        utilities:board_full([1,2,3,4,5,6,7,8,9])),
+        utilities:check_for_draw([1,2,3,4,5,6,7,8,9])),
       ?assertEqual( not_yet,
-        utilities:board_full([x,2,3,4,5,6,7,8,9])),
+        utilities:check_for_draw([x,2,3,4,5,6,7,8,9])),
       ?assertEqual( not_yet,
-        utilities:board_full([x,o,3,4,5,6,7,8,9])),
+        utilities:check_for_draw([x,o,3,4,5,6,7,8,9])),
       ?assertEqual( not_yet,
-        utilities:board_full([x,o,x,o,5,x,o,x,o])),
+        utilities:check_for_draw([x,o,x,o,5,x,o,x,o])),
       ?assertEqual( cats_game,
-        utilities:board_full([x,o,x,o,x,x,o,x,o]))}].
+        utilities:check_for_draw([x,o,x,o,x,x,o,x,o]))}].
 
 x_wins_test() ->
   [{  "returns win message for x",

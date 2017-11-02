@@ -5,9 +5,9 @@ display(Message) -> io:fwrite(Message).
 
 display_board([]) 			    
 	-> board;
-display_board([RowToPrint | RemainingRows]) 
-	-> io:format("~w~n",[RowToPrint]),
-  	   display_board(RemainingRows).
+display_board([FirstToPrint | [NextToPrint | [LastToPrint | LeftToPrint]]]) 
+	-> io:format("~w~n",[[FirstToPrint, NextToPrint, LastToPrint]]),
+  	 display_board(LeftToPrint).
   
 greet_user() -> display(instructions:greet()).
 
@@ -20,3 +20,4 @@ validate_move_format(UserMove)
 		try list_to_integer(Move) of _ -> list_to_integer(Move)
   		catch error:badarg 	       -> invalid
 		end.
+
