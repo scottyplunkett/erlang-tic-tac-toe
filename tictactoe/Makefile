@@ -1,16 +1,16 @@
-all:		
-			compile run_test clean
+all:
+	compile run_test clean
 
 compile:
-			erlc -o ebin/ src/*.erl
-			erlc -o ebin/ test/*.erl
+	erlc -o ebin/ src/*.erl
+	erlc -o ebin/ test/*.erl
 
 run_test:
-			erl -pa ebin \
-			-env ERL_LIBS deps/ \
-			-eval 'eunit:test("ebin").' \
-			-s init stop
+	erl -pa ebin \
+	-env ERL_LIBS deps/ \
+	-eval 'eunit:test("ebin").' \
+	-s init stop
 
 clean: 
-			rm -rf */*.beam 
-			rm -rf erl_crash.dump
+	rm -rf */*.beam 
+	rm -rf erl_crash.dump
