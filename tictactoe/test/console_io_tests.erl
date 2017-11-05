@@ -1,30 +1,23 @@
 -module(console_io_tests).
 -include_lib("eunit/include/eunit.hrl").
+-define(INIT_BOARD, [1,2,3,4,5,6,7,8,9]).
 
-display_test() -> 
-	[{	"displays some message in the console",	
-			?assertEqual(console_io:display("Some Message"),io:fwrite("Some Message")),
-			?assertEqual(console_io:display(instructions:greet()),io:fwrite("Welcome to TicTacToe\n"))}].
+display_test()              -> [{"displays some message in the console",
+                                 ?assertEqual(console_io:display("Some Message"),io:fwrite("Some Message")),
+                                 ?assertEqual(console_io:display(instructions:greet()),io:fwrite("Welcome to TicTacToe\n"))}].
 
-display_board_test() -> 
-  [{  "displays a board with a row printed on each line",
-      ?assertEqual(console_io:display_board([1]),board)}].
+display_board_test()        -> [{"displays a board with a row printed on each line",
+                                 ?assertEqual(console_io:display_board([1,2,3,4,5,6,7,8,9]),console_io:display_board(?INIT_BOARD))}].
 
-greet_user_test() -> 
-	[{ 	"greets a user in console",
-			?assertEqual(console_io:greet_user(),
-									 io:fwrite(instructions:greet()))}].
+greet_user_test()           -> [{"greets a user in console",
+                                 ?assertEqual(console_io:greet_user(),io:fwrite(instructions:greet()))}].
 
-get_move_test() -> 
-  [{  "ask a user where they would like to move and passes their input",
-      ?assertEqual(console_io:get_move(),
-                   io:fread(instructions:ask_for_move(),"~s"))}].
+get_move_test()             -> [{"ask a user where they would like to move and passes their input",
+                                 ?assertEqual(console_io:get_move(),io:fread(instructions:ask_for_move(),"~s"))}].
 
-get_marker_test() -> 
-  [{  "ask a user what they would like to use as their marker and passes their input",
-      ?assert(is_tuple(console_io:get_marker()))}].
+validate_move_format_test() -> [{"formats user's move",
+                                 ?assertEqual(1,console_io:validate_move_format({ok,["1"]})),
+                                 ?assertEqual(invalid, console_io:validate_move_format({ok,["G"]}))}].
 
-prompt_test() -> 
-	[{ 	"displays a prompt and awaits input",
-			?assertEqual(	console_io:prompt("Some prompt"),
-										io:fread("Some Prompt\n","~s"))}].
+prompt_test()               -> [{"displays a prompt and awaits input",
+                                 ?assertEqual(console_io:prompt("Some prompt"),io:fread("Some Prompt\n","~s"))}].
