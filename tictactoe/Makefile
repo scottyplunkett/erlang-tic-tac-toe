@@ -16,6 +16,8 @@ compile:
 	erlc -o ebin/ test/*.erl
 
 run_test:
+	erlc -o ebin/ src/*.erl
+	erlc -o ebin/ test/*.erl
 	erl -pa ebin \
 	-env ERL_LIBS deps/ \
 	-eval 'eunit:test("ebin").' \
