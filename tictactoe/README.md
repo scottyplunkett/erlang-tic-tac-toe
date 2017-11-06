@@ -1,4 +1,0 @@
-tictactoe
-=====
-
-An OTP application
