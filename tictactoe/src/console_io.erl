@@ -15,9 +15,11 @@ prompt(MessageToClient) -> io:fread(MessageToClient++"\n","~s").
 
 get_move() -> prompt(instructions:ask_for_move()).
 
-validate_move_format(UserMove) 
-	-> {ok,[Move]} = UserMove,
-		try list_to_integer(Move) of _ -> list_to_integer(Move)
-  		catch error:badarg 	       -> invalid
-		end.
+validate_move_format(Move) when is_integer(Move) -> Move;
+validate_move_format({ok,[Move]}) 
+	-> try list_to_integer(Move) of 
+          _ -> list_to_integer(Move)
+  	 catch 
+          error:badarg -> invalid 
+      end.
 

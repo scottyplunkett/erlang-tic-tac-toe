@@ -1,14 +1,14 @@
 -module(utilities).
--export([move/3,mark_board/3,change_player/1,validate_move_position/2,check_for_draw/1,winner_of/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,is_player_x_cell/1,is_empty_cell/1]).
+-export([move/2,mark_board/3,change_player/1,validate_move_position/2,check_for_draw/1,winner_of/1,game_won/1,x_wins/0,o_wins/0,whos_in_play/1,is_player_x_cell/1,is_empty_cell/1]).
 
 
-move(invalid,Board,Piece)           
-  -> {invalid,Board,Piece};
-move({valid, Position},Board,Piece) 
-  -> mark_board(Position, Board, Piece);
-move(Location, Board, Piece)        
+move(invalid,Board)           
+  -> {invalid,Board};
+move({valid, Position},Board) 
+  -> {valid,mark_board(Position, Board, whos_in_play(Board))};
+move(Location, Board)        
   -> Validity_Of_Position = validate_move_position(console_io:validate_move_format(Location), Board),
-                            move(Validity_Of_Position,Board,Piece).
+                            move(Validity_Of_Position,Board).
 
 mark_board(Move, Board, Piece) 
   -> BoardBeforeMove = lists:sublist(Board, Move - 1),
@@ -16,7 +16,8 @@ mark_board(Move, Board, Piece)
      BoardBeforeMove ++ [Piece] ++ BoardAfterMove.
 
 change_player(x) -> o;
-change_player(o) -> x.
+change_player(o) -> x;
+change_player([Player1Type,Player2Type]) -> [Player2Type,Player1Type].
 
 whos_in_play(Board) 
   -> Xs      = length(lists:filter(fun is_player_x_cell/1, Board)),
