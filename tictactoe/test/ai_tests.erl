@@ -10,7 +10,7 @@ get_best_move_test()
         ?assertEqual(3,ai:get_best_move([x,x,3,4,5,6,7,o,9],o)),
         ?assertEqual(3,ai:get_best_move([x,x,3,4,5,6,7,o,9],x))}].
         
-get_boards_possible@next_round_test() 
+possible_boards_test() 
   -> [{ "makes a list of hypothetical boards after next move",
         ?assertEqual(([[1,2,3,4,5,6,7,8,x],
                        [1,2,3,4,5,6,7,x,9],
@@ -21,7 +21,7 @@ get_boards_possible@next_round_test()
                        [1,2,x,4,5,6,7,8,9],
                        [1,x,3,4,5,6,7,8,9],
                        [x,2,3,4,5,6,7,8,9]]),
-                       ai:get_boards_possible@next_round([1,2,3,4,5,6,7,8,9],x)),
+                       ai:possible_boards([1,2,3,4,5,6,7,8,9],x)),
         ?assertEqual(([[1,2,3,4,5,6,x,o,x],
                        [1,2,3,4,5,x,7,o,x],
                        [1,2,3,4,x,6,7,o,x],
@@ -29,16 +29,16 @@ get_boards_possible@next_round_test()
                        [1,2,x,4,5,6,7,o,x],
                        [1,x,3,4,5,6,7,o,x],
                        [x,2,3,4,5,6,7,o,x]]),
-                       ai:get_boards_possible@next_round([1,2,3,4,5,6,7,o,x],x)),
+                       ai:possible_boards([1,2,3,4,5,6,7,o,x],x)),
         ?assertEqual(([[1,2,3,4,5,o,x,o,x],
                        [1,2,3,4,o,6,x,o,x],
                        [1,2,3,o,5,6,x,o,x],
                        [1,2,o,4,5,6,x,o,x],
                        [1,o,3,4,5,6,x,o,x],
                        [o,2,3,4,5,6,x,o,x]]),
-                       ai:get_boards_possible@next_round([1,2,3,4,5,6,x,o,x],o)),
+                       ai:possible_boards([1,2,3,4,5,6,x,o,x],o)),
         ?assertEqual(([[o,x,o,x,o,o,x,o,x]]),
-                       ai:get_boards_possible@next_round([o,x,o,x,o,6,x,o,x],o))}].
+                       ai:possible_boards([o,x,o,x,o,6,x,o,x],o))}].
 
 score_test() 
   -> Terminal_Board_Won_By_X_3_empties = [x,x,x,o,o,6,o,8,9],
@@ -99,6 +99,6 @@ minimax_value_test()
       ?assertEqual(0, ai:minimax_value(Terminal_Board_Drawn, x)),
       ?assertEqual(0, ai:minimax_value(Terminal_Board_Drawn, o)),
       ?assertEqual(-6, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, o)),
-      ?assertEqual(5, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, x)),
+      ?assertEqual(-3, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, x)),
       ?assertEqual(-5, ai:minimax_value(Board_Not_Won_x_Turn_5_empties, o)),
       ?assertEqual(5, ai:minimax_value(Board_Not_Won_x_Turn_5_empties, x))}].
