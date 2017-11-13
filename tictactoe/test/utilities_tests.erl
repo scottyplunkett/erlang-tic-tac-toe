@@ -5,10 +5,10 @@ move_test() ->
   InvalidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [x,2,3,4,5,6,7,8,9]),
   ValidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [1,2,3,4,5,6,7,8,9]),
   [{  "checks validity and marks board when move is valid, otherwise returns invalid info tuple",
-      ?assertEqual({invalid,[1,2,3,4,5,6,7,8,x],o}, 
-                   utilities:move(InvalidMove,[1,2,3,4,5,6,7,8,x],o)),
-      ?assertEqual([x,2,3,4,5,6,7,8,9], 
-                   utilities:move(ValidMove,[1,2,3,4,5,6,7,8,9],x))}].
+      ?assertEqual({invalid,[1,2,3,4,5,6,7,8,x]}, 
+                   utilities:move(InvalidMove,[1,2,3,4,5,6,7,8,x])),
+      ?assertEqual({valid,[x,2,3,4,5,6,7,8,9]}, 
+                   utilities:move(ValidMove,[1,2,3,4,5,6,7,8,9]))}].
 
 mark_board_test() ->
   [{  "returns board with marker placed",
