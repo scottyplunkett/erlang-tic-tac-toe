@@ -99,6 +99,6 @@ minimax_value_test()
       ?assertEqual(0, ai:minimax_value(Terminal_Board_Drawn, x)),
       ?assertEqual(0, ai:minimax_value(Terminal_Board_Drawn, o)),
       ?assertEqual(-6, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, o)),
-      ?assertEqual(5, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, x)),
+      ?assertEqual(-3, ai:minimax_value(Board_Not_Won_o_Turn_6_empties, x)),
       ?assertEqual(-5, ai:minimax_value(Board_Not_Won_x_Turn_5_empties, o)),
       ?assertEqual(5, ai:minimax_value(Board_Not_Won_x_Turn_5_empties, x))}].

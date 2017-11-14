@@ -2,6 +2,7 @@ all:
 	compile run_test clean
 
 play:
+	mkdir ebin
 	erlc -o ebin/ src/*.erl
 	erlc -o ebin/ test/*.erl
 	erl -pa ebin \
@@ -12,6 +13,7 @@ play:
 	-s init stop  
 
 compile:
+	mkdir ebin
 	erlc -o ebin/ src/*.erl
 	erlc -o ebin/ test/*.erl
 
