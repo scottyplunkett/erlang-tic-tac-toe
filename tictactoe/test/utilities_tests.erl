@@ -5,10 +5,10 @@ move_test() ->
   InvalidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [x,2,3,4,5,6,7,8,9]),
   ValidMove = utilities:validate_move_position(console_io:validate_move_format({ok,["1"]}), [1,2,3,4,5,6,7,8,9]),
   [{  "checks validity and marks board when move is valid, otherwise returns invalid info tuple",
-      ?assertEqual({invalid,[1,2,3,4,5,6,7,8,x],o}, 
-                   utilities:move(InvalidMove,[1,2,3,4,5,6,7,8,x],o)),
-      ?assertEqual([x,2,3,4,5,6,7,8,9], 
-                   utilities:move(ValidMove,[1,2,3,4,5,6,7,8,9],x))}].
+      ?assertEqual({invalid,[1,2,3,4,5,6,7,8,x]}, 
+                   utilities:move(InvalidMove,[1,2,3,4,5,6,7,8,x])),
+      ?assertEqual({valid,[x,2,3,4,5,6,7,8,9]}, 
+                   utilities:move(ValidMove,[1,2,3,4,5,6,7,8,9]))}].
 
 mark_board_test() ->
   [{  "returns board with marker placed",
@@ -31,15 +31,15 @@ whos_in_play_test() ->
     ?assertEqual(x,utilities:whos_in_play([x,o,x,o,5,6,7,8,9])),
     ?assertEqual(o,utilities:whos_in_play([x,o,x,o,x,o,x,8,9]))}].
 
-cell_owned_by_x_test() ->
+is_player_x_cell_test() ->
   [{  "returns boolean based on wheather cell passed as argument holds x or not",
-      ?assertEqual(true,utilities:cell_owned_by_x(x),
-      ?assertNotEqual(true,utilities:cell_owned_by_x(o)))}].
+      ?assertEqual(true,utilities:is_player_x_cell(x),
+      ?assertNotEqual(true,utilities:is_player_x_cell(o)))}].
 
-cell_vacant_test() ->
+is_empty_cell_test() ->
   [{  "returns boolean based on wheather cell passed as argument is empty",
-      ?assertEqual(true,utilities:cell_vacant(1),
-      ?assertNotEqual(true,utilities:cell_vacant(o)))}].
+      ?assertEqual(true,utilities:is_empty_cell(1),
+      ?assertNotEqual(true,utilities:is_empty_cell(o)))}].
 
 validate_move_position_test() ->
   [{  "validates a move",
@@ -65,78 +65,78 @@ check_for_draw_test() ->
       ?assertEqual( cats_game,
         utilities:check_for_draw([x,o,x,o,x,x,o,x,o]))}].
 
-x_wins_test() ->
-  [{  "returns win message for x",
-    ?assertEqual("Player 1, the 'x' player has won the game.\n", utilities:x_wins())}].
-
-o_wins_test() ->
-  [{  "returns win message for o",
-    ?assertEqual("Player 2, the 'o' player has won the game.\n", utilities:o_wins())}].
+winner_of_test() -> 
+  [{  "checks if there's a winner in a win combination",
+      ?assertEqual([x],utilities:winner_of([x,x,x])),
+      ?assertEqual([x],utilities:winner_of([x,x,x,x,x])),
+      ?assertEqual([o],utilities:winner_of([o,o,o])),
+      ?assertEqual([o],utilities:winner_of([o,o,o,o,o])),
+      ?assertEqual(false, utilities:winner_of([1,o,o,o,o]))}].  
 
 game_won_test() -> 
   [{  "checks if the game is won",
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([x,x,x,
                             4,5,6,
                             7,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([o,o,o,
                             4,5,6,
                             7,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([1,2,3,
                             o,o,o,
                             7,8,9])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([1,2,3,
                             x,x,x,
                             7,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([1,2,3,
                             4,5,6,
                             o,o,o])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([1,2,3,
                             4,5,6,
                             x,x,x])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([x,2,3,
                             x,5,6,
                             x,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([o,2,3,
                             o,5,6,
                             o,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([1,o,3,
                             4,o,6,
                             7,o,9])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([1,x,3,
                             4,x,6,
                             7,x,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([1,2,o,
                             4,5,o,
                             7,6,o])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([1,2,x,
                             4,5,x,
                             6,7,x])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([1,2,x,
                             4,x,6,
                             x,8,9])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([1,2,o,
                             4,o,6,
                             o,7,9])),
-      ?assertEqual( {true, utilities:x_wins()},
+      ?assertEqual( {true, x},
         utilities:game_won([x,2,3,
                             4,x,6,
                             7,8,x])),
-      ?assertEqual( {true, utilities:o_wins()},
+      ?assertEqual( {true, o},
         utilities:game_won([o,2,3,
                             4,o,6,
-                            7,8,o]))
-      }].
+                            7,8,o]))}].
+

@@ -24,6 +24,6 @@ run_test:
 	-s init stop
 
 clean: 
-	rm -rf */*.beam 
+	rm -rf ebin/*.beam 
 	rm -rf erl_crash.dump
 
